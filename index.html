@@ -86,17 +86,20 @@
       color: white;
       border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.1s;
       user-select: none;
+      transition: background-color 0.3s, transform 0.15s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
     }
 
     button:hover {
       background-color: var(--btn-hover-light);
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
     }
 
     button:active {
-      transform: scale(0.95);
-      transition: transform 0.05s;
+      transform: scale(0.9);
+      box-shadow: 0 0 12px rgba(0, 123, 255, 0.9);
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
 
     body.dark button {
@@ -123,7 +126,6 @@
       background-color: #8b1b22;
     }
 
-    /* زر الوضع الليلي */
     #toggleDark {
       margin-bottom: 15px;
       padding: 10px 20px;
@@ -150,7 +152,6 @@
       background-color: #999;
     }
 
-    /* قسم الوصف */
     .project-info {
       max-width: 700px;
       background: var(--calc-bg-light);
