@@ -5,8 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>آلة حاسبة بسيطة</title>
   <style>
+    :root {
+      --bg-light: #f0f0f0;
+      --bg-dark: #121212;
+      --calc-bg-light: white;
+      --calc-bg-dark: #1e1e1e;
+      --text-light: #333;
+      --text-dark: #eee;
+      --btn-bg-light: #007bff;
+      --btn-bg-dark: #375a7f;
+      --btn-hover-light: #0056b3;
+      --btn-hover-dark: #2a4d75;
+      --btn-danger-light: #dc3545;
+      --btn-danger-dark: #b33939;
+    }
+
     body {
-      background-color: #f0f0f0;
+      background-color: var(--bg-light);
+      color: var(--text-light);
       font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
@@ -14,14 +30,28 @@
       min-height: 100vh;
       direction: rtl;
       padding: 20px;
+      transition: background-color 0.4s, color 0.4s;
     }
+
+    body.dark {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
     .calculator {
-      background: white;
+      background: var(--calc-bg-light);
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
       margin-bottom: 30px;
+      transition: background-color 0.4s, box-shadow 0.4s;
     }
+
+    body.dark .calculator {
+      background: var(--calc-bg-dark);
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
     .display {
       width: 100%;
       height: 50px;
@@ -32,47 +62,133 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       background: #eaeaea;
+      transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+      user-select: none;
     }
+
+    body.dark .display {
+      background: #2c2c2c;
+      color: var(--text-dark);
+      border-color: #444;
+    }
+
     .buttons {
       display: grid;
       grid-template-columns: repeat(4, 60px);
       gap: 10px;
     }
+
     button {
       padding: 15px;
       font-size: 18px;
       border: none;
-      background-color: #007bff;
+      background-color: var(--btn-bg-light);
       color: white;
       border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s, transform 0.1s;
+      user-select: none;
     }
+
     button:hover {
-      background-color: #0056b3;
+      background-color: var(--btn-hover-light);
     }
-    /* تنسيق القسم الوصفي */
+
+    button:active {
+      transform: scale(0.95);
+      transition: transform 0.05s;
+    }
+
+    body.dark button {
+      background-color: var(--btn-bg-dark);
+    }
+
+    body.dark button:hover {
+      background-color: var(--btn-hover-dark);
+    }
+
+    .btn-danger {
+      background-color: var(--btn-danger-light);
+    }
+
+    .btn-danger:hover {
+      background-color: #a71d2a;
+    }
+
+    body.dark .btn-danger {
+      background-color: var(--btn-danger-dark);
+    }
+
+    body.dark .btn-danger:hover {
+      background-color: #8b1b22;
+    }
+
+    /* زر الوضع الليلي */
+    #toggleDark {
+      margin-bottom: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #888;
+      border: none;
+      border-radius: 25px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+
+    #toggleDark:hover {
+      background-color: #555;
+    }
+
+    body.dark #toggleDark {
+      background-color: #bbb;
+      color: #222;
+    }
+
+    body.dark #toggleDark:hover {
+      background-color: #999;
+    }
+
+    /* قسم الوصف */
     .project-info {
       max-width: 700px;
-      background: white;
+      background: var(--calc-bg-light);
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
       line-height: 1.6;
-      color: #333;
+      color: var(--text-light);
       text-align: right;
       font-size: 16px;
+      transition: background-color 0.4s, color 0.4s;
     }
+
+    body.dark .project-info {
+      background: var(--calc-bg-dark);
+      color: var(--text-dark);
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+
     .project-info h2 {
       margin-top: 0;
       color: #007bff;
       margin-bottom: 15px;
+      transition: color 0.4s;
     }
+
+    body.dark .project-info h2 {
+      color: #4dabf7;
+    }
+
     .project-info ul {
       padding-right: 20px;
     }
   </style>
 </head>
 <body>
+  <button id="toggleDark" aria-label="تبديل الوضع الليلي">الوضع الليلي</button>
+
   <div class="calculator">
     <div class="display" id="display">0</div>
     <div class="buttons">
@@ -96,7 +212,7 @@
       <button onclick="calculate()">=</button>
       <button onclick="append('+')">+</button>
 
-      <button onclick="clearDisplay()" style="grid-column: span 4; background-color: #dc3545;">مسح</button>
+      <button onclick="clearDisplay()" class="btn-danger" style="grid-column: span 4;">مسح</button>
     </div>
   </div>
 
@@ -130,7 +246,15 @@
   </div>
 
   <script>
-    let display = document.getElementById("display");
+    const body = document.body;
+    const toggleDarkBtn = document.getElementById('toggleDark');
+    const display = document.getElementById("display");
+
+    // تبديل الوضع الليلي
+    toggleDarkBtn.addEventListener('click', () => {
+      body.classList.toggle('dark');
+      toggleDarkBtn.textContent = body.classList.contains('dark') ? 'الوضع النهاري' : 'الوضع الليلي';
+    });
 
     function append(value) {
       if (display.innerText === "0") {
