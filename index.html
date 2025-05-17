@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>آلة حاسبة بسيطة</title>
+  <title>مقترح مشروع - آلة حاسبة بسيطة</title>
   <style>
     :root {
       --bg-light: #f0f0f0;
@@ -19,39 +19,95 @@
       --btn-danger-light: #dc3545;
       --btn-danger-dark: #b33939;
     }
-
     body {
       background-color: var(--bg-light);
       color: var(--text-light);
       font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
       direction: rtl;
+      margin: 0;
       padding: 20px;
       transition: background-color 0.4s, color 0.4s;
     }
-
     body.dark {
       background-color: var(--bg-dark);
       color: var(--text-dark);
     }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      color: #007bff;
+    }
+    section {
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      background: var(--calc-bg-light);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      transition: background-color 0.4s, color 0.4s;
+    }
+    body.dark section {
+      background: var(--calc-bg-dark);
+      color: var(--text-dark);
+      box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    }
+    h2 {
+      color: #007bff;
+      margin-top: 0;
+      margin-bottom: 15px;
+      transition: color 0.4s;
+    }
+    body.dark h2 {
+      color: #4dabf7;
+    }
+    ul {
+      padding-right: 20px;
+    }
+    /* زر الوضع الليلي */
+    #toggleDark {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #888;
+      border: none;
+      border-radius: 25px;
+      color: white;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s;
+      z-index: 1000;
+    }
+    #toggleDark:hover {
+      background-color: #555;
+    }
+    body.dark #toggleDark {
+      background-color: #bbb;
+      color: #222;
+    }
+    body.dark #toggleDark:hover {
+      background-color: #999;
+    }
 
+    /* --- كود الآلة الحاسبة --- */
     .calculator {
       background: var(--calc-bg-light);
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
       margin-bottom: 30px;
+      max-width: 350px;
+      margin-left: auto;
+      margin-right: auto;
       transition: background-color 0.4s, box-shadow 0.4s;
     }
-
     body.dark .calculator {
       background: var(--calc-bg-dark);
       box-shadow: 0 0 20px rgba(255,255,255,0.1);
     }
-
     .display {
       width: 100%;
       height: 50px;
@@ -65,19 +121,16 @@
       transition: background-color 0.4s, color 0.4s, border-color 0.4s;
       user-select: none;
     }
-
     body.dark .display {
       background: #2c2c2c;
       color: var(--text-dark);
       border-color: #444;
     }
-
     .buttons {
       display: grid;
       grid-template-columns: repeat(4, 60px);
       gap: 10px;
     }
-
     button {
       padding: 15px;
       font-size: 18px;
@@ -90,107 +143,97 @@
       transition: background-color 0.3s, transform 0.15s ease, box-shadow 0.3s ease;
       box-shadow: 0 0 0 rgba(0,0,0,0);
     }
-
     button:hover {
       background-color: var(--btn-hover-light);
       box-shadow: 0 0 8px rgba(0, 123, 255, 0.7);
     }
-
     button:active {
       transform: scale(0.9);
       box-shadow: 0 0 12px rgba(0, 123, 255, 0.9);
       transition: transform 0.1s ease, box-shadow 0.1s ease;
     }
-
     body.dark button {
       background-color: var(--btn-bg-dark);
     }
-
     body.dark button:hover {
       background-color: var(--btn-hover-dark);
     }
-
     .btn-danger {
       background-color: var(--btn-danger-light);
     }
-
     .btn-danger:hover {
       background-color: #a71d2a;
     }
-
     body.dark .btn-danger {
       background-color: var(--btn-danger-dark);
     }
-
     body.dark .btn-danger:hover {
       background-color: #8b1b22;
     }
 
-    #toggleDark {
-      margin-bottom: 15px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #888;
-      border: none;
-      border-radius: 25px;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-      transition: background-color 0.3s;
-    }
-
-    #toggleDark:hover {
-      background-color: #555;
-    }
-
-    body.dark #toggleDark {
-      background-color: #bbb;
-      color: #222;
-    }
-
-    body.dark #toggleDark:hover {
-      background-color: #999;
-    }
-
-    .project-info {
-      max-width: 700px;
-      background: var(--calc-bg-light);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      line-height: 1.6;
-      color: var(--text-light);
-      text-align: right;
-      font-size: 16px;
-      transition: background-color 0.4s, color 0.4s;
-    }
-
-    body.dark .project-info {
-      background: var(--calc-bg-dark);
-      color: var(--text-dark);
-      box-shadow: 0 0 20px rgba(255,255,255,0.1);
-    }
-
-    .project-info h2 {
-      margin-top: 0;
-      color: #007bff;
-      margin-bottom: 15px;
-      transition: color 0.4s;
-    }
-
-    body.dark .project-info h2 {
-      color: #4dabf7;
-    }
-
-    .project-info ul {
-      padding-right: 20px;
-    }
   </style>
 </head>
 <body>
   <button id="toggleDark" aria-label="تبديل الوضع الليلي">الوضع الليلي</button>
 
-  <div class="calculator">
+  <header>
+    <h1>مقترح مشروع - آلة حاسبة بسيطة</h1>
+  </header>
+
+  <section>
+    <h2>Title of Project</h2>
+    <p>آلة حاسبة بسيطة</p>
+  </section>
+
+  <section>
+    <h2>Team Members</h2>
+    <ul>
+      <li>إبراهيم رمضان السنوسي - الرقم الدراسي: 222552</li>
+      <li>سعد فوزي محمد - الرقم الدراسي: 222551</li>
+      <li>فرج أكرم فرج - الرقم الدراسي: 222572</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Introduction</h2>
+    <p>هذا المشروع عبارة عن تطبيق آلة حاسبة ويب بسيط تم تطويره باستخدام HTML، CSS، وJavaScript. يهدف المشروع إلى توفير أداة سهلة وسريعة لتنفيذ العمليات الحسابية الأساسية مثل الجمع، الطرح، الضرب، والقسمة عبر واجهة مستخدم واضحة وسلسة.</p>
+  </section>
+
+  <section>
+    <h2>Objectives</h2>
+    <ul>
+      <li>إنشاء تطبيق ويب متجاوب باستخدام HTML وCSS وJavaScript.</li>
+      <li>تمكين المستخدم من إجراء العمليات الحسابية الأساسية بسهولة وسرعة.</li>
+      <li>توفير واجهة مستخدم بسيطة وسهلة الاستخدام.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Technologies Used</h2>
+    <ul>
+      <li>HTML: لبناء هيكل التطبيق.</li>
+      <li>CSS: لتنسيق وتصميم واجهة المستخدم.</li>
+      <li>JavaScript: لإضافة التفاعلية ومنطق الحسابات.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Project Description</h2>
+    <h3>1. Target Audience</h3>
+    <p>الطلاب والمستخدمين الذين يحتاجون لأداة سريعة وبسيطة لإجراء العمليات الحسابية الأساسية.</p>
+    <h3>2. Features</h3>
+    <ul>
+      <li>دعم العمليات الحسابية الأساسية: جمع، طرح، ضرب، وقسمة.</li>
+      <li>واجهة مستخدم واضحة وسهلة الاستخدام.</li>
+      <li>تصميم متجاوب يدعم الأجهزة المختلفة.</li>
+      <li>وضع ليلي لتسهيل الاستخدام في ظروف الإضاءة المنخفضة.</li>
+      <li>تأثيرات حركية على الأزرار لتحسين تجربة المستخدم.</li>
+    </ul>
+    <h3>3. Wireframes/Design Mockups</h3>
+    <p>تصميم بسيط لشاشة عرض العملية الحسابية وأزرار العمليات الرقمية والرياضية، كما هو موضح في واجهة التطبيق أدناه.</p>
+  </section>
+
+  <section class="calculator">
     <div class="display" id="display">0</div>
     <div class="buttons">
       <button onclick="append('7')">7</button>
@@ -215,36 +258,60 @@
 
       <button onclick="clearDisplay()" class="btn-danger" style="grid-column: span 4;">مسح</button>
     </div>
-  </div>
+  </section>
 
-  <div class="project-info">
-    <h2>مشروع آلة حاسبة بسيطة</h2>
-    <strong>أعضاء الفريق:</strong>
+  <section>
+    <h2>Implementation Plan</h2>
+    <ol>
+      <li>البحث والتخطيط.</li>
+      <li>تصميم الشكل العام (wireframes).</li>
+      <li>تطوير الهيكل بـ HTML.</li>
+      <li>تصميم الواجهة باستخدام CSS.</li>
+      <li>إضافة منطق الحساب باستخدام JavaScript.</li>
+      <li>اختبار وتصحيح الأخطاء.</li>
+      <li>المراجعة النهائية والنشر.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Timeline</h2>
+    <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%; max-width: 900px; margin: auto; text-align: right;">
+      <thead style="background-color: #007bff; color: white;">
+        <tr>
+          <th>Task</th>
+          <th>Research</th>
+          <th>Design</th>
+          <th>Development</th>
+          <th>Testing</th>
+          <th>Final Review</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Estimated Time</td>
+          <td>1 week</td>
+          <td>1 week</td>
+          <td>2 weeks</td>
+          <td>1 week</td>
+          <td>1 week</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>Conclusion</h2>
+    <p>يوفر مشروع آلة حاسبة بسيطة أداة عملية وسهلة الاستخدام لإجراء العمليات الحسابية الأساسية. يمكن تطوير المشروع مستقبلاً بإضافة ميزات متقدمة مثل العمليات الرياضية الإضافية، ودعم لوحة المفاتيح، وحفظ سجل العمليات.</p>
+  </section>
+
+  <section>
+    <h2>References</h2>
     <ul>
-      <li>إبراهيم رمضان السنوسي - الرقم الدراسي: 222552</li>
-      <li>سعد فوزي محمد - الرقم الدراسي: 222551</li>
-      <li>فرج أكرم فرج - الرقم الدراسي: 222572</li>
+      <li>MDN Web Docs</li>
+      <li>W3Schools</li>
+      <li>دروس JavaScript على YouTube</li>
     </ul>
-
-    <strong>وصف المشروع:</strong>
-    <p>هذا المشروع عبارة عن تطبيق آلة حاسبة ويب بسيط تم تطويره باستخدام HTML، CSS، وJavaScript. يهدف المشروع إلى توفير أداة سهلة وسريعة لتنفيذ العمليات الحسابية الأساسية مثل الجمع، الطرح، الضرب، والقسمة عبر واجهة مستخدم واضحة وسلسة.</p>
-
-    <strong>الميزات:</strong>
-    <ul>
-      <li>دعم جميع العمليات الحسابية الأساسية.</li>
-      <li>تصميم متجاوب يعمل على أجهزة الكمبيوتر والهواتف المحمولة.</li>
-      <li>واجهة مستخدم بسيطة وسهلة الاستخدام.</li>
-    </ul>
-
-    <strong>الميزات المستقبلية المقترحة:</strong>
-    <ul>
-      <li>دعم العمليات الحسابية المتقدمة مثل الجذر التربيعي، القوى، واللوغاريتمات.</li>
-      <li>تحسين دقة العمليات الحسابية مع الأعداد العشرية.</li>
-      <li>إضافة وضع الليل (Dark Mode) لتجربة مستخدم مريحة.</li>
-      <li>دعم إدخال الأرقام والعمليات من لوحة المفاتيح.</li>
-      <li>إضافة سجل العمليات الحسابية السابقة لتسهيل مراجعتها.</li>
-    </ul>
-  </div>
+  </section>
 
   <script>
     const body = document.body;
