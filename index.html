@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>مقترح مشروع آلة حاسبة بسيطة - كامل</title>
+<title>مقترح مشروع آلة حاسبة بسيطة</title>
 <style>
   :root {
     --color-primary: #5e60ce;
@@ -227,102 +227,34 @@
 <button id="toggleDark" aria-label="تبديل الوضع الليلي">الوضع الليلي</button>
 
 <header>
-  <h1>مقترح مشروع - آلة حاسبة بسيطة</h1>
+  <h1>مقترح مشروع آلة حاسبة بسيطة</h1>
 </header>
 
 <section>
   <h2>Title of Project</h2>
-  <p>مشروع تطبيق آلة حاسبة ويب بسيطة وسهلة الاستخدام.</p>
+  <p>Give your project a descrip􏰀ve 􏰀tle.<br><br>
+  مشروع تطبيق آلة حاسبة ويب بسيطة وسهلة الاستخدام.</p>
 </section>
 
 <section>
   <h2>Team Members</h2>
+  <p>List ID and name of team members. Two to three members should work equally on the project<br><br>
   <ul>
     <li>إبراهيم رمضان السنوسي - الرقم الدراسي: 222552</li>
     <li>سعد فوزي محمد - الرقم الدراسي: 222551</li>
     <li>فرج أكرم فرج - الرقم الدراسي: 222572</li>
-  </ul>
+  </ul></p>
 </section>
 
 <section>
-  <h2>Timeline</h2>
-  <table>
-    <thead>
-      <tr><th>المهمة</th><th>المدة المتوقعة</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>البحث والتخطيط</td><td>يوم واحد</td></tr>
-      <tr><td>تصميم الواجهة</td><td>يوم واحد</td></tr>
-      <tr><td>البرمجة والتطوير</td><td>يومان</td></tr>
-      <tr><td>الاختبار والتجريب</td><td>نصف يوم</td></tr>
-      <tr><td>المراجعة النهائية والنشر</td><td>نصف يوم</td></tr>
-    </tbody>
-  </table>
+  <h2>Introduction</h2>
+  <p>Provide a brief overview of your project. Explain the problem it addresses or the concept it explores.<br><br>
+  هذا المشروع عبارة عن تطبيق آلة حاسبة ويب بسيط تم تطويره باستخدام HTML، CSS، وJavaScript. يهدف المشروع إلى توفير أداة سهلة وسريعة لتنفيذ العمليات الحسابية الأساسية مثل الجمع، الطرح، الضرب، والقسمة عبر واجهة مستخدم واضحة وسلسة.</p>
 </section>
 
-<section class="calculator" aria-label="آلة حاسبة بسيطة">
-  <div class="display" id="display" role="textbox" aria-live="polite" aria-atomic="true">0</div>
-  <div class="buttons">
-    <button class="calc-btn" onclick="append('7')">7</button>
-    <button class="calc-btn" onclick="append('8')">8</button>
-    <button class="calc-btn" onclick="append('9')">9</button>
-    <button class="calc-btn" onclick="append('/')">÷</button>
-    <button class="calc-btn" onclick="append('4')">4</button>
-    <button class="calc-btn" onclick="append('5')">5</button>
-    <button class="calc-btn" onclick="append('6')">6</button>
-    <button class="calc-btn" onclick="append('*')">×</button>
-    <button class="calc-btn" onclick="append('1')">1</button>
-    <button class="calc-btn" onclick="append('2')">2</button>
-    <button class="calc-btn" onclick="append('3')">3</button>
-    <button class="calc-btn" onclick="append('-')">-</button>
-    <button class="calc-btn" onclick="append('0')">0</button>
-    <button class="calc-btn" onclick="append('.')">.</button>
-    <button class="calc-btn" onclick="calculate()">=</button>
-    <button class="calc-btn" onclick="append('+')">+</button>
-    <button class="calc-btn danger" onclick="clearDisplay()">مسح</button>
-    <button class="calc-btn danger" onclick="backspace()">⌫</button>
-  </div>
-</section>
-
-<script>
-  const body = document.body;
-  const toggleDarkBtn = document.getElementById('toggleDark');
-  const display = document.getElementById("display");
-
-  toggleDarkBtn.addEventListener('click', () => {
-    body.classList.toggle('dark');
-    toggleDarkBtn.textContent = body.classList.contains('dark') ? 'الوضع النهاري' : 'الوضع الليلي';
-  });
-
-  function append(value) {
-    if (display.innerText === "0" || display.innerText === "خطأ") {
-      display.innerText = value;
-    } else {
-      display.innerText += value;
-    }
-  }
-
-  function calculate() {
-    try {
-      const result = eval(display.innerText);
-      display.innerText = Number.isFinite(result) ? result : "خطأ";
-    } catch {
-      display.innerText = "خطأ";
-    }
-  }
-
-  function clearDisplay() {
-    display.innerText = "0";
-  }
-
-  function backspace() {
-    if (display.innerText.length > 1 && display.innerText !== "خطأ") {
-      display.innerText = display.innerText.slice(0, -1);
-    } else {
-      display.innerText = "0";
-    }
-  }
-</script>
-
-</body>
-</html>
+<section>
+  <h2>Objectives</h2>
+  <p>List the main objec􏰀ves you aim to achieve with this project. For example:<br><br></p>
+  <ul>
+    <li>To create a responsive web applica􏰀on using HTML, CSS, and JavaScript.</li>
+    <li>To implement interac􏰀ve features that
