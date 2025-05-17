@@ -1,209 +1,204 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>مقترح مشروع - آلة حاسبة بسيطة</title>
-  <style>
-    :root {
-      --bg-light: #f0f0f0;
-      --bg-dark: #121212;
-      --calc-bg-light: white;
-      --calc-bg-dark: #1e1e1e;
-      --text-light: #333;
-      --text-dark: #eee;
-      --btn-bg-light: #007bff;
-      --btn-bg-dark: #375a7f;
-      --btn-hover-light: #0056b3;
-      --btn-hover-dark: #2a4d75;
-      --btn-danger-light: #dc3545;
-      --btn-danger-dark: #b33939;
-      --btn-backspace-light: #17a2b8;
-      --btn-backspace-dark: #117a8b;
-      --btn-backspace-hover-light: #117a8b;
-      --btn-backspace-hover-dark: #0b5e68;
-    }
-    body {
-      background-color: var(--bg-light);
-      color: var(--text-light);
-      font-family: Arial, sans-serif;
-      direction: rtl;
-      margin: 0;
-      padding: 20px;
-      transition: background-color 0.4s, color 0.4s;
-    }
-    body.dark {
-      background-color: var(--bg-dark);
-      color: var(--text-dark);
-    }
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    h1 {
-      color: #007bff;
-    }
-    section {
-      max-width: 900px;
-      margin: 0 auto 40px auto;
-      background: var(--calc-bg-light);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      transition: background-color 0.4s, color 0.4s;
-    }
-    body.dark section {
-      background: var(--calc-bg-dark);
-      color: var(--text-dark);
-      box-shadow: 0 0 20px rgba(255,255,255,0.1);
-    }
-    h2 {
-      color: #007bff;
-      margin-top: 0;
-      margin-bottom: 15px;
-      transition: color 0.4s;
-    }
-    body.dark h2 {
-      color: #4dabf7;
-    }
-    ul {
-      padding-right: 20px;
-    }
-    /* زر الوضع الليلي */
-    #toggleDark {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #888;
-      border: none;
-      border-radius: 25px;
-      color: white;
-      cursor: pointer;
-      user-select: none;
-      transition: background-color 0.3s;
-      z-index: 1000;
-      box-shadow: 0 0 8px rgba(0,0,0,0.15);
-    }
-    #toggleDark:hover {
-      background-color: #555;
-      box-shadow: 0 0 12px rgba(0,0,0,0.3);
-    }
-    body.dark #toggleDark {
-      background-color: #bbb;
-      color: #222;
-      box-shadow: 0 0 8px rgba(255,255,255,0.3);
-    }
-    body.dark #toggleDark:hover {
-      background-color: #999;
-      box-shadow: 0 0 14px rgba(255,255,255,0.5);
-    }
-
-    /* --- كود الآلة الحاسبة --- */
-    .calculator {
-      background: var(--calc-bg-light);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      margin-bottom: 30px;
-      max-width: 350px;
-      margin-left: auto;
-      margin-right: auto;
-      transition: background-color 0.4s, box-shadow 0.4s;
-    }
-    body.dark .calculator {
-      background: var(--calc-bg-dark);
-      box-shadow: 0 0 20px rgba(255,255,255,0.1);
-    }
-    .display {
-      width: 100%;
-      height: 50px;
-      font-size: 24px;
-      margin-bottom: 10px;
-      text-align: right;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background: #eaeaea;
-      transition: background-color 0.4s, color 0.4s, border-color 0.4s;
-      user-select: none;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
-    }
-    body.dark .display {
-      background: #2c2c2c;
-      color: var(--text-dark);
-      border-color: #444;
-      box-shadow: inset 0 2px 5px rgba(255,255,255,0.1);
-    }
-    .buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 60px);
-      gap: 10px;
-    }
-    button {
-      padding: 15px;
-      font-size: 18px;
-      border: none;
-      background-color: var(--btn-bg-light);
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      user-select: none;
-      transition:
-        background-color 0.3s,
-        transform 0.15s ease,
-        box-shadow 0.3s ease;
-      box-shadow: 0 0 0 rgba(0,0,0,0);
-    }
-    button:hover {
-      background-color: var(--btn-hover-light);
-      box-shadow: 0 0 12px rgba(0, 123, 255, 0.8);
-      transform: scale(1.05);
-    }
-    button:active {
-      transform: scale(0.9);
-      box-shadow: 0 0 18px rgba(0, 123, 255, 1);
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-    }
-    body.dark button {
-      background-color: var(--btn-bg-dark);
-    }
-    body.dark button:hover {
-      background-color: var(--btn-hover-dark);
-    }
-    .btn-danger {
-      background-color: var(--btn-danger-light);
-    }
-    .btn-danger:hover {
-      background-color: #a71d2a;
-      box-shadow: 0 0 14px rgba(220, 53, 69, 0.9);
-      transform: scale(1.1);
-    }
-    body.dark .btn-danger {
-      background-color: var(--btn-danger-dark);
-    }
-    body.dark .btn-danger:hover {
-      background-color: #8b1b22;
-    }
-
-    /* زر باك سبيس */
-    .btn-backspace {
-      background-color: var(--btn-backspace-light);
-    }
-    .btn-backspace:hover {
-      background-color: var(--btn-backspace-hover-light);
-      box-shadow: 0 0 14px rgba(23, 162, 184, 0.9);
-      transform: scale(1.1);
-    }
-    body.dark .btn-backspace {
-      background-color: var(--btn-backspace-dark);
-    }
-    body.dark .btn-backspace:hover {
-      background-color: var(--btn-backspace-hover-dark);
-      box-shadow: 0 0 14px rgba(17, 122, 139, 0.9);
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>مقترح مشروع - آلة حاسبة بسيطة</title>
+<style>
+  :root {
+    --bg-light: #f0f0f0;
+    --bg-dark: #121212;
+    --calc-bg-light: white;
+    --calc-bg-dark: #1e1e1e;
+    --text-light: #333;
+    --text-dark: #eee;
+    --btn-bg-light: #007bff;
+    --btn-bg-dark: #375a7f;
+    --btn-hover-light: #0056b3;
+    --btn-hover-dark: #2a4d75;
+    --btn-danger-light: #dc3545;
+    --btn-danger-dark: #b33939;
+    --btn-backspace-light: #17a2b8;
+    --btn-backspace-dark: #117a8b;
+    --btn-backspace-hover-light: #117a8b;
+    --btn-backspace-hover-dark: #0b5e68;
+  }
+  body {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    font-family: Arial, sans-serif;
+    direction: rtl;
+    margin: 0;
+    padding: 20px;
+    transition: background-color 0.4s, color 0.4s;
+  }
+  body.dark {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+  }
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  h1 {
+    color: #007bff;
+  }
+  section {
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    background: var(--calc-bg-light);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: background-color 0.4s, color 0.4s;
+  }
+  body.dark section {
+    background: var(--calc-bg-dark);
+    color: var(--text-dark);
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+  }
+  h2 {
+    color: #007bff;
+    margin-top: 0;
+    margin-bottom: 15px;
+    transition: color 0.4s;
+  }
+  body.dark h2 {
+    color: #4dabf7;
+  }
+  ul {
+    padding-right: 20px;
+  }
+  #toggleDark {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #888;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+    z-index: 1000;
+    box-shadow: 0 0 8px rgba(0,0,0,0.15);
+  }
+  #toggleDark:hover {
+    background-color: #555;
+    box-shadow: 0 0 12px rgba(0,0,0,0.3);
+  }
+  body.dark #toggleDark {
+    background-color: #bbb;
+    color: #222;
+    box-shadow: 0 0 8px rgba(255,255,255,0.3);
+  }
+  body.dark #toggleDark:hover {
+    background-color: #999;
+    box-shadow: 0 0 14px rgba(255,255,255,0.5);
+  }
+  .calculator {
+    background: var(--calc-bg-light);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.4s, box-shadow 0.4s;
+  }
+  body.dark .calculator {
+    background: var(--calc-bg-dark);
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+  }
+  .display {
+    width: 100%;
+    height: 50px;
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: right;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #eaeaea;
+    transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+    user-select: none;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+  }
+  body.dark .display {
+    background: #2c2c2c;
+    color: var(--text-dark);
+    border-color: #444;
+    box-shadow: inset 0 2px 5px rgba(255,255,255,0.1);
+  }
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 60px);
+    gap: 10px;
+  }
+  button {
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    background-color: var(--btn-bg-light);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color 0.3s,
+      transform 0.15s ease,
+      box-shadow 0.3s ease;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+  }
+  button:hover {
+    background-color: var(--btn-hover-light);
+    box-shadow: 0 0 12px rgba(0, 123, 255, 0.8);
+    transform: scale(1.05);
+  }
+  button:active {
+    transform: scale(0.9);
+    box-shadow: 0 0 18px rgba(0, 123, 255, 1);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+  body.dark button {
+    background-color: var(--btn-bg-dark);
+  }
+  body.dark button:hover {
+    background-color: var(--btn-hover-dark);
+  }
+  .btn-danger {
+    background-color: var(--btn-danger-light);
+  }
+  .btn-danger:hover {
+    background-color: #a71d2a;
+    box-shadow: 0 0 14px rgba(220, 53, 69, 0.9);
+    transform: scale(1.1);
+  }
+  body.dark .btn-danger {
+    background-color: var(--btn-danger-dark);
+  }
+  body.dark .btn-danger:hover {
+    background-color: #8b1b22;
+  }
+  .btn-backspace {
+    background-color: var(--btn-backspace-light);
+  }
+  .btn-backspace:hover {
+    background-color: var(--btn-backspace-hover-light);
+    box-shadow: 0 0 14px rgba(23, 162, 184, 0.9);
+    transform: scale(1.1);
+  }
+  body.dark .btn-backspace {
+    background-color: var(--btn-backspace-dark);
+  }
+  body.dark .btn-backspace:hover {
+    background-color: var(--btn-backspace-hover-dark);
+    box-shadow: 0 0 14px rgba(17, 122, 139, 0.9);
+  }
+</style>
 </head>
 <body>
   <button id="toggleDark" aria-label="تبديل الوضع الليلي">الوضع الليلي</button>
@@ -374,3 +369,28 @@
 
     function calculate() {
       try {
+        let result = eval(display.innerText);
+        if (result === Infinity || result === -Infinity || isNaN(result)) {
+          display.innerText = "خطأ";
+        } else {
+          display.innerText = result;
+        }
+      } catch {
+        display.innerText = "خطأ";
+      }
+    }
+
+    function clearDisplay() {
+      display.innerText = "0";
+    }
+
+    function backspace() {
+      if (display.innerText.length > 1 && display.innerText !== "خطأ") {
+        display.innerText = display.innerText.slice(0, -1);
+      } else {
+        display.innerText = "0";
+      }
+    }
+  </script>
+</body>
+</html>
